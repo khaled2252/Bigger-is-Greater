@@ -22,33 +22,40 @@ public class BiggerIsGreater {
         System.out.println("Enter a string");
         char[] string = scanner.next().toCharArray();
         
-        int n = string.length - 1;
+         int n = string.length - 1;
         char temp = 0;
         int replacedCharIndex = -1;
+        int toBeReplacedCharIndex = -1;
+        int minimumCharIndex = -1;
+        for (int i = n - 1; i >= 0; i--) {
+            for (int j = n; j > i; j--) {
+                if (string[j] > string[i]) {
+                    if (toBeReplacedCharIndex == -1) {
+                        toBeReplacedCharIndex = i;
+                        minimumCharIndex = j;
 
-        for (int i = n; i >= 0; i--) {
-            for (int j = i-1; j >= 0; j--) {
-                if(string[i]>string[j])
-                {
-                    temp = string[i];
-                    string[i]=string[j];
-                    string[j]=temp;
-                    replacedCharIndex=j;
-                    break;
+                    } else {
+                        if (string[minimumCharIndex] > string[j]) {
+                            minimumCharIndex = j;
+                        }
+                    }
+
                 }
             }
-            if(replacedCharIndex>-1)
+            if (minimumCharIndex > -1) {
+                temp = string[minimumCharIndex];
+                string[minimumCharIndex] = string[toBeReplacedCharIndex];
+                string[toBeReplacedCharIndex] = temp;
+                replacedCharIndex = toBeReplacedCharIndex;
                 break;
-        }
-            if(replacedCharIndex==-1)
-                System.out.println("No answer");
-            else
-            {
-                Arrays.sort(string,replacedCharIndex+1,string.length);
-                System.out.println(string);
-
             }
-                
-    }
+        }
+        if (replacedCharIndex == -1) {
+            System.out.println("No answer");
+        } else {
+            Arrays.sort(string, replacedCharIndex + 1, string.length);
+            System.out.println(string);
+
+        }
 
 }
